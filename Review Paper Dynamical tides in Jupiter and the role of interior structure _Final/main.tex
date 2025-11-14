@@ -1,0 +1,431 @@
+\documentclass{aa}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{breqn,amsmath}
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+
+\title{Review Paper of Dynamical Tides in Jupiter and the Role of Interior Structure (Yufeng Lin)}
+\author{Valentino Gaber}
+\date{February 2025}
+
+\begin{document}
+\abstract{
+    \small
+    \textbf{Context}
+    Gaseous planets like Jupiter's orbital development, angular momentum exchange, and interior structure depend on tidal interactions. Dynamic tides use inertial and gravity waves to dissipate energy, while equilibrium tides represent large-scale hydrostatic deformation owing to tidal forcing. Recent observations of Jupiter's tidal Love numbers suggest that classic equilibrium tide models may not be sufficient, requiring a more detailed dynamical approach.
+    
+    \textbf{Aims}
+    This study examines Jupiter's dynamical tides, how different internal theories affect them, and whether Love number discrepancies are due to a dilute core, stratification, or rotational effects. By using a broader paradigm, we hope to understand how interior structure affects tidal dissipation.
+    
+    \textbf{Methods}
+    We use a completely compressible, self-gravitating fluid model that includes Coriolis force and dynamical tidal response. The numerical method uses spherical harmonics for angular decomposition and Chebyshev collocation for radial discretization. Tidal dissipation and Love number corrections are investigated with compact stiff core, extended dilute core, and stratified outer layer interior models.
+    
+    \textbf{Results}
+    We found that dynamical tides considerably alter Jupiter's tidal response, bringing model predictions closer to Love numbers. Dynamic tides effectively resolve the disparity in $\Delta k_{22}$, but not in $\Delta k_{42}$, indicating the need for further modifications in stratification, rotation, or viscosity effects. This work emphasizes the role of dynamical tides in planetary models and constrains Jupiter's internal structure based on its tidal response.}
+\maketitle
+\section{Introduction}
+Giant gaseous planets such as Jupiter experience significant tidal interactions with their satelites and vice versa.(\cite{Lainey2009}) Studies have shown that tidal interactions may be responsible for the orbital migration of moons, leading to their capture into resonant configurations such as the Laplace Resonance regarding Io, Europa and Ganymede.(\cite{Ogilvie_2004}) Notably the tidal dissipation of energy may be responsible for effects such as tidal heating, which causes the planet to inflate. (\cite{Ogilvie_2004}) Therefore the tidal response of satelites onto their host planet may play an important role in the structure, such as its eccentricity and mass distirbution, and orbital evolution of said planet. (\cite{Ogilvie_2004}) When modeling the tidal responses of gaseous planets, we usually consider the model proposed by Darwin (1890) based on Newton's observations, in which we consider a gaseous spherical body continuously adjusting to remain in quasi-hydrostatic equilibrium under the varying gravitational potential caused by i.e. its moons. Darwin's theory gives rise to a so called phase lag due to tidal forcing which inturn gives rise to energy dissipation in the form of tidal dissipation. (\cite{Ogilvie_2004}) This whole process is known as equilibrium tide, in which the bulges are created due to for one the gravitational force enacted onto the planet by a moon and secondly due to the centrifugal force. (\cite{TidesIntro}, \cite{Ogilvie_2004})
+
+However studies have shown that the strong tidal dissipation in Jupiter cannot be explained through the equilibirum tide alone. In fact there have to be made corrections to the model known as dynmaical tides, which allow us to solve the momentum equation of tidal flows. (\cite{refId0}, \cite{Ogilvie_2004}) In comparison to the equilbirum tide we consider dynmical tides wave-like, since we can observe "wave-like" features such as oscillations, energy propagation, and resonance effects in dynamical tides, whereas equilibrium tides are non-wave-like since equilibrium tides represent the hydrostatic deformation of the planet's surface and interior in response to gravitational forces enacted upon the planet by its i.e. satelites, allowing for dissipation mainly through the afforementioned phase lag dependant on the viscosity of the body (\cite{Ogilvie_2004}).Evidence of tidal dissipation in Jupiter can be found when looking at the already mentioned Laplace resonance. To maintain such a configuration tidal dissipation within Jupiter must transfer some angular momentum from its spin into Io's orbit. Possible sources of tidal dissipation for equilibrium waves come in the form of turbulence in the convective envelopes of the planet, where the turbulence can lead to the dissipation of motion due to the continual adjustment of the equilibrium tide.(\cite{Ogilvie_2004}, \cite{YouTubeVideo}) Dynamical tides provide alternative modes of dissipation such as in the form of internal gravity waves in radiative regions, which can be shown to be linear combinations of Hough waves. Inertial waves in convective regions also provide a source of dissipation.
+
+The importance of dynamical tides in recent studies arises due to the recently found discrepancies of the theoretical tidal love numbers $k_{lm}$, where $l$ and $m$ represent the degree and order respectively, of higher order with respect to the ones observed by the Juno spacecraft, where tidal love numbers represent the tidal response of Jupiter to tidal forcing. Juno found $\Delta k_{22} \approx-4\%$ for the dominant tidal component, where $\Delta k_{lm} = (k_{lm}-k_{lm}^{(hs)})/k_{lm}^{(hs)}$. The discrepancy in this component can be attributed to not taking into account the dynamical part of the tidal response. \cite{refId0} For the higher-order tidal love number $k_{42}$ a discrepancy of $\Delta k_{42} \approx -11\%$ could be found. \cite{refId0}
+
+(\cite{Idini_2021},\cite{Idini_2022b}) could show that the discrepancy in $k_{22}$ can be mainly attributed to not properly taking the corriolis force into account. They also showed that $\Delta k_{42} \approx -11\%$ could be attributed to Jupiter locking with a gravity mode in an extended dilute core, which would theoretically provide an independent additional source to Jupiter having an extended dilute core, which the data gathered by Juno would suggest as well. However (\cite{Idini_2022b}) inadequatly treated the effect of the corriolis force and failed to reconcile the real part, related to graviational perturbation and the imaginary part, related to tidal dissipation, of the tidal love number in their model. Suggesting adjustments have to be made to reconcile both the imaginary and real parts of the tidal love number.
+
+This recent study by Yufeng Lin derived a model to compute the tidal response for a self-gravitating, fully compressible, and viscous fluid body and taking the corriolis force fully into account. Using expanded techniques from (\cite{Ogilvie_2004} and 2017) to solve the tidally forced problem in spherical geometry using a pseudo-spectral method, involving chebyshev collocation on $N_r$ Gauss-Lobatto Nodes (as described in \cite{Ogilvie_2004}). In contrast to other studies Yufeng Lin was able to compute the real and imaginary parts of the tidal love number by accounting for the viscosity explicitly, whereas other studies such as the already mentioned (\cite{Idini_2022b}) where only able to obtain the real parts of the tidal love number. In this study Yufeng Lin considers three interior models the compact rigid core, extended dilute core, and a thin stratified layer in the outer region (similar to models of Saturn mentioned in Dr. Adrian Baker Tidal dissipation in stably stratified and layered regions of rotating giant planets), some of which overlap with recent findings of Juno such as the already mentioned extended dilute core. Yufeng's model is able to account for the discrepancy at $k_{22}$ but is unable to explain the discrepancy at $k_{42}$.
+
+In this paper we will give a short review of tidal responses with which we are then able to develop models which behave according to the introduced constraints.
+
+\section{Tidal Response}
+\subsection{Equilibrium Tide}
+As previously mentioned the tidal response can usually be split into two parts an equilibrium tide and a dynamical tide, which respectively contribute to the net tidal dissipation. As already mentioned the concept of the equilibrium tide was introduced by darwin and it suggests that a spherical fluid body under constant rotation has to undergo continuous adjustment as to maintain a quasi-hydrostatic state. To understand this phenomenon we have to introduce the concept of tidal forcing, in which a "bulge" is generated through the gravitational interaction, according to newton, with its orbiting body.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\linewidth]{images/tidalforcing.png}
+    \caption{Tidal forcing (credit \cite{TidesIntro})}
+    \label{fig:tidal-forcing}
+\end{figure}
+It is clear that the gravitational interaction on the side where the orbiting body resides produces a "pulling" \ref{fig:tidal-forcing} effect i.e. on the water of the planet. What is not obvious is, that an equal effect is produced on the opposite side. This second "bulge" is produced by the inertial effect around the center of mass of i.e. the earth-moon system, as the system rotates the water gets "flung" outside and produces the second "bulge". Now if as the earth rotates, and the motion of the bulge can keep up with the tidal forcing, earth can come into a quasi-hydrostatic equilibrial state in which the bulges aren't distorted. It is obvious that this model is not perfect for planets like the earth and even gaseous planets such as Jupiter, as it assumes that the whole sphere is covered homogeneously. Not to mention that we already discussed that the equilibrium tide cannot solve the momentum equation of tidal flows. (\cite{TidesIntro}, \cite{RichardsonTides})
+
+What is important to note from the equilibrium theory of tides, is the so called quality factor $Q$. It stems from the so called phase lag which is dependant on the tidal forcing frequency and the viscosity of the body. It gives rise to tidal dissipation of energy. This dissipation is characterized by the quality factor $Q$ which itself is a function of the frequency and amplitude of the tidal forcing (\cite{Ogilvie_2004}). In the planetary science community this factor is usually treated as constant. Studies have shown that this is roughly true for i.e. Earth at several different forcing frequencies (\cite{Ogilvie_2004}). The afformentioned phase lag is than given by $\arcsin{Q^{-1}}$. As tidal forcing is not unique to earth like planets, Jupiter also experiences tidal dissipation. As already mentioned to maintain the Laplace resonance Jupiter has to transfer some of its angular momentum through tidal dissipation onto Io, such that Io, Europa and Ganymede can remain in the latter configuration. Now knowing the dissipation rate of Io, on can infer the approximate $Q$ value for Jupiter to be in the range of $6\cdot10^4 -2\cdot10^6$ (Yoder and Peale 1981). Using the $Q$ value one can make assumptions about the orbital evolution of a system. Since the quality factor allows us to find the phase lag, with which we can intern infer how much momentum i.e. was introduced into the system from i.e. Jupiter. So tidal dissipation may explain several configurations of planets around there stars and orbiting bodies. 
+
+\subsection{Dynamical Tide}
+Whereas the equilibirum tides represent the non-wave-like response, the dynamical tides are considered wave-like, since they involve wave-like perturbations in response to tidal forcing, allowing the transfer of energy and angular momentum across the interior of a planet. Generally speaking we divide dynamical tides into gravitational perturbations (g-modes), which are  excited in radiative regions, driven by buoyancy, where gravitational forces dominate and dissipate energy through radiative damping and inertial waves in convective regions, dominated by the Coriolis force. Why are gravitational perturbations dominant in radiative regions, the reason is simply atributed to the fact, that energy is transported through radiation and not convection, which allows for a stable density gradient, meaning that displaced fluid experiences a restoring force due to buoyancy. The regions in which gravitational perturbation can occur can be characterized through the Brunt-Väisälä frequency $N^2 = \frac{1}{\rho_0}\frac{d p_0}{dr}\left(\frac{d \ln \rho_0}{dr} - \frac{1}{\gamma}\frac{d \ln p_0}{dr}\right)$ where $\gamma = \left(\frac{\partial \ln p_0}{\partial \ln \rho_0}\right)_S$ is the adiabatic index, $p_0$ the pressure and $\rho_0$ is the density (\cite{Ogilvie_2004}, \cite{refId0} 2024, Wikipedia). As the Brunt-Väisälä frequency represents the frequency when waves propagate horizontally (Wikipedia) stabily stratified regions in which waves can propagate can be characterized through the fact that $N^2>0$ in those regions.
+
+These wave-like perturbations are primarily driven through low-frequency tidal forcing (as discussed in \cite{Ogilvie_2004}) and can resonate with the planet's natural oscillation modes. Leading to so called resonance frequencies at which energy and momentum transfer is more efficient than at non-resonant frequencies.\cite{Ogilvie_2004} Where these resonant frequencies arise is typically dependent on the planets interior structure and rotation, as \cite{refId0} shows.
+
+Dynamical tides play a particularly strong role in fast rotating planets such as Jupiter, as the inertial waves in convective regions are primarily dominated through the coriolis force. Since this allows for vaster tidal dissipation and thereby angular momentum transfer onto its oribting companions. The Laplace resonance of Io, Europa and Ganymede can be attributed in part to Jupiter's fast rotation. Since g-modes primarily dominate in radiative regions and Jupiter is a gaseous planet, and is therby largely convective, their role in orbital evolution is thereby not as well understood. \cite{Ogilvie_2004}
+
+
+\section{Tidal Model}
+\subsection{Basic Equations}
+To quantify these processes, we rely on mathematical models that describe the dynamics of tides within a rotating, stratified system like Jupiter. These models use linearized equations to capture the behavior of internal waves and the dissipation they cause.
+To derive the linearized equations, the "Basic Equations" \cite{Ogilvie_2004} have to be understood first.
+
+When we want to describe astronomical objects with fluid dynamical characteristics we have to use fundamental equations from said field.
+
+When describing motion in fluids, we use Euler's Equation of Motion, which can be derived from the macroscopic velocities and the pressure tensor, as shown in (\cite{Battaner_1996}). 
+\begin{equation}\label{Euler Eq}
+    \frac{\partial u}{\partial t} + u \cdot \nabla u = - \frac{1}{\rho}\nabla p - \nabla \Phi
+\end{equation}
+Where u $u$ is the flow velocity vector, $\rho$ the density, $p$ the pressure and $\Phi$ the gravitational potential. (Euler's Equation of Motion (Fluid Dynamics) Wikipedia)
+
+When analyzing gravitational modes in the further steps we have to consider the effect of mass conservation on the propagation of gravitational waves through density perturbations. The following equation of mass conservation denotes said characteristics.
+
+\begin{equation}\label{Mass Cons}
+    \frac{D \rho}{D t} = \frac{\partial \rho}{\partial t} + u \cdot \nabla \rho = -\rho \nabla \cdot u
+\end{equation}
+Where $\frac{D}{Dt}$ is the lagrangian time derivative.
+
+Given that the paper doesn't consider the role of heat transfer in tidal dissipation, naturally the adiabatic condition arises.
+\begin{equation}\label{Adiabatic Cond}
+    \frac{1}{\gamma}\frac{D \ln p}{Dt} - \frac{D \ln \rho}{Dt} = 0
+\end{equation}
+
+The last of the basic equations describes the effect of self-gravitation through
+\begin{equation}\label{Poisson}
+    \Delta \Phi = 4\pi\,G\rho
+\end{equation}
+Where $G$ denotes the gravitational constant.
+
+In the paper, by \cite{Ogilvie_2004} and all subsequent papers, said equations are solved using perturbative techniques as described in the following sections.
+
+\subsection{Linearized Equations}
+As Yufeng Lin's paper doesn't concern itself with the deformation due to the centrifugal force, there will be no perturbations used regarding the deformation factor $\epsilon^2 = \Omega^2 R_1^3/GM_1 \approx 0.08$ for Jupiter, which isn't small and largely contributes to $k_{42}^{hs}$ due to the centrifugal coupling of $k_{42}^{(hs)}$ with $k_{22}$. \cite{refId0}
+\subsubsection{Eulerian Perturbation}
+Eulerian perturbation theory describes changes in physical quantities (e.g. density, velocity and pressure) at fixed spatial points in a coordinate system rather than following individual fluid elements.
+
+If $Q(\vec{r},t)$ is a field variable (such as velocity $\vec{v}$, density $\rho$, or pressure $p$), we express perturbations as:
+\begin{equation}
+    Q(\vec{r},t) = Q_0(\vec{r}) + Q'(\vec{r},t)
+\end{equation}
+where $Q_0$ denotes the equilibrium state (unperturbed) and $Q'$ is the perturbation (small deviation). For small perturbations, linearizing the governing equations (such as \ref{Euler Eq}, \ref{Mass Cons}, \ref{Adiabatic Cond}, \ref{Poisson}) gives a system that can be solved analytically or numerically. (\cite{Ogilvie_2004})
+
+The Eulerian perturbation described in \cite{Ogilvie_2004}, uses an oscillatory ansatz by introducing the induced Eulerian velocity perturbation
+\begin{equation}
+    u = \text{Re}[u'(r,\theta)\,e^{i(\phi m -\omega t)}]
+\end{equation}
+\\
+Which yield the following linearized equations for a compressible, self-gravitation, and rotating fluid body which may contain a rigid core of radius $R_i$.
+\begin{equation} \label{pert euler}
+    -i\omega\mathbf{u'} + 2\mathbf{\Omega \times u'} = -\frac{1}{\rho_0}\nabla \mathbf{P'} + \frac{\rho'}{\rho_0^2}\nabla \mathbf{P_0} - \nabla \mathbf{\Phi'} - \nabla \mathbf{\Psi} + \mathbf{f_\nu}
+\end{equation}
+\begin{equation} \label{pert mass cons}
+    -i\omega\rho' +\nabla\cdot(\rho_0\mathbf{u'}) = 0
+\end{equation}
+\begin{equation} \label{pert adiabat}
+    -i\omega \left(\frac{P'}{\Gamma P_0} - \frac{\rho'}{\rho_0}\right) +\; \mathbf{u'}\cdot\left(\frac{1}{\Gamma}\nabla\ln P_0 - \nabla \ln \rho_0\right) = 0
+\end{equation}
+\begin{equation} \label{pert grav}
+    \Delta \phi' = 4\pi \,G\rho'
+\end{equation}
+With $\mathbf{u}$ being the velocity, $\Omega$ the rotation rate, $\rho$ the density, $P$ the pressure, $\Gamma$ the adiabatic index, and $G$ the gravitational constant. In the above equations $0$ denotes, as already explained, the equilibrium hydrostatic state.
+Where $2\mathbf{\Omega \times u'}$ represents the Coriolis-Force which yields dissipation in convective regions such as the regions with high turbulence (Ekman-Number of $\text{Ek} = 10^{-7}$).$\frac{\rho'}{\rho_0^2}\nabla \mathbf{P_0}$ is a Buoyancy Term, or in other words represents the gravitational perturbations caused by small "parcels" of fluid being moved upwards and hindered from moving further through a constant density perturbation, this act continues and produces gravitational waves in regions where there is no convection. $\nabla \mathbf{\Psi}$ or the Tidal-Forcing leads to tidal dissipation in the form of equilibrium tides. As is already noticeable in the above equations, Yufeng Lin made some adjustments to the Basic Equations to account for certain additional forces acting on Jupiter. One of said forces is the viscous force \begin{equation}
+    \mathbf{f_{\nu}} = \frac{1}{\rho_0}\nabla \cdot (2\mu\mathbf{S})
+\end{equation}, where $\mu$ is the dynamic shear viscosity and $\mathbf{S}$ is the usual strain-rate tensor:
+\begin{equation}
+    \mathbf{S} = \frac{1}{2}\left[\nabla \mathbf{u'} + (\nabla\mathbf{u'})^T\right] - \frac{1}{3}(\nabla\cdot\mathbf{u'})\mathbf{I}
+\end{equation}
+\cite{refId0}
+They've included the viscous force in the momentum equation \ref{pert euler}, but neglected the viscous heating in the energy equation. \cite{refId0}
+
+Solutions to the aforementioned equations can be derived for the following simplified regions according to \cite{Ogilvie_2004}, namely the Convective regions, Radiative regions and some "mixed" regions (mixture explained through mixing theory) according to \cite{Idini_2022b}. Instead of going through the detailed solution of each of these regions, which can be found neatly summed up in Ogivlie and Lin 2004, I will just give a brief overview of the solution of said problems.
+
+In general the researchers aimed to reduce the linearized equations to an eigenvalue problem. I.e. when solving the linearized equations in radiative regions they wanted to solve
+\begin{equation}
+    \mathcal{L}w_i = \lambda_i w_i
+\end{equation}
+Where $\mathcal{L}$ is a linear operator, $w_i$ are the freely propagating wave solutions for $\lambda>0$ and $\lambda_i = \frac{k^2 r^2}{N^2}$ the corresponding eigenvalues. Or reducing the problem to give solutions involving spherical harmonics through projection.
+(Ogilbie and Lin 2004)
+\subsection{Numerical Solution}
+Discussing the concrete method used to solve the linearized equations as described in \cite{refId0} requires one to solve the equations using a pseudo-spectral method which are subject to certain boundary conditions. The solution to the problem is similar to the one explained in \cite{Ogilvie_2004} which includes a low-frequency approach but is more detailed. The aforementioned solution can be derived in the following way.
+
+Consider a planetary model, where we neglect centrifugal deformation and where we keep the model as simple as possible. We consider the planet to be fully convective except for a small solid core, $r < r_c$, and a shallow radiative envelope, $r_b < r < R_1$. We model the planet as a polytope of Index 1, so that the density is \cite{Ogilvie_2004}
+\begin{equation}
+    \rho = \left(\frac{\pi M}{4R_1^3}\right)\frac{\sin{kr}}{kr}
+\end{equation}
+where $k$ is related to the radius $R_1$ of the planet by $kR_1 = \pi$. The gravitational acceleration is defined through
+\begin{equation}
+    g = \frac{GM_1}{\pi r^2}(\sin{kr} - kr\cos{kr})
+\end{equation}
+\cite{Ogilvie_2004}
+
+This model neglects any modifications to its structure within the convective region in association with the presence of a solid core and an envelope with a stable density gradient and where buoyancy acts as a restoring force.
+
+The tidal potential for such a giant planet can be described through
+\begin{equation}
+    \tilde{\Psi} = \frac{GM_2}{a^3} A r^2
+\end{equation}
+where $A$ is a dimensionless constant. We can find solutions for the equilibrium tide given some boundary conditions such as the simplification to the Helmholtz equation.
+
+Considering this model we project the basic equations governing tidally forced waves in convective regions onto spherical harmonics (Note these equations are specific to the convective regions and are related to the linearized equations in \cite{refId0}. But as this excerpt serves as a general overview to the solution of the problem described in Yufeng Lin, I won't divert into the explanation of the derivation of said equations for the convective regions specified in the section 4.2 of \cite{Ogilvie_2004}).
+The projection involves the decomposition of the velocity into "spheroidal" and "toroidal" parts and then project all variables on to spherical harmonics such that (following the Method of Zahn 1966)
+\begin{align}
+    u_r &= \sum a_n(r) \tilde{P}_n^m(cos\theta) \label{proj ur}\\
+    u_\theta &= r\sum\left[b_n(r)\frac{d}{d\theta} + c_n(r)\frac{im}{\sin\theta}\right]\tilde{P}_n^m(\cos \theta)\\
+    u_\phi &= r\sum\left[b_n(r)\frac{im}{\sin\theta} - c_n(r)\frac{d}{d\theta}\right]\tilde{P}_n^m(\cos \theta)\\
+    W &= \sum id_n(r)\tilde{P}_n^m(\cos \theta) \label{proj W}
+\end{align}
+Where $\tilde{P}_n^m(\cos \theta)$ are the associated Legendre Polynomials. This set of equations allows the decomposition in terms of radial functions. \cite{Ogilvie_2004}
+
+The Coriolis force introduces coupling between different spherical harmonics of varying degrees $n$. Even if the tidal forcing acts only on a single harmonic, rotation-induced effect lead to additional coupled harmonics.
+
+To facilitate projections, recurrence relations for Legendre polynomials are employed:
+\begin{align}
+    \cos\theta \tilde{P}_n^m(\cos \theta) &= q_{n+1}\tilde{P}_{n+1}^m(\cos \theta) + q_n\tilde{P}_{n-1}^m(\cos \theta)\\
+    \sin\theta\frac{d}{d\theta}\tilde{P}_n^m(\cos \theta) &= nq_{n+1}\tilde{P}_{n+1}^m(\cos \theta) - (n+1)q_n\tilde{P}_{n-1}^m(\cos \theta) 
+\end{align}
+where 
+\begin{equation}
+    q_n = \left(\frac{n^2 - m^2}{4n^2 -1}\right)^{1/2}
+\end{equation}
+for normalized associated Legendre polynomials. \cite{Ogilvie_2004}
+By taking suitable linear combinations of the angular momentum equations, divergence-like and curl-like complements are extracted, leading to a more structured system. After projection, the problem is reduced to a set of coupled ordinary differential equations in terms of the radial functions $a_n(r), b_n(r),c_n(r),d_n(r)$. These equations describe how the various wave components interact under rotations and viscosity.
+The Boundary conditions are imposed at the inner and outer radii of the convective region
+\begin{equation}
+    a_n + i\hat{\omega}\tilde{\xi_r}\delta_{nl} = \frac{a_n}{r^2} + \frac{db_n}{dr} = \frac{dc_n}{dr} = 0 \;\;\;\; \text{at}\;\;\;\; r = r_b
+\end{equation}
+\begin{equation}
+    a_n +i\hat{\omega}\tilde{\xi_r}\delta_{nl} = rb_n + i\hat{\omega}\tilde{\xi_h}\delta_{nl} = rc_n = 0 \;\;\;\;\text{at}\;\;\;\; r = r_c
+\end{equation}
+with $\hat{\omega}$ being the frequency in the convective region. For this we can derive the viscous dissipation rate per unit volume
+\begin{equation}\label{visc diss}
+    D_{\text{visc}} = \pi \int_{r_c}^{r_b}\sum_n D_nr^2 dr
+\end{equation}
+where $D_n$ contains contributions from velocity gradients and viscosity coefficients. From the dissipation rate we can observe certain behaviours at i.e. resonant frequencies.
+
+\subsection{Chebyshev Collocation}
+To solve the previously mentioned reduced ODEs we use something called Chebyshev Collocation on $N_r$ Gauss-Lobatto modes.
+
+Chebyshev collocation is a pseudospectral method, meaning it approximates functions using global basis functions rather than local finite-difference schemes. The main idea is to express the function as a sum of Chebyshev polynomials. A Chebyshev polynomial of the first kind is defined as
+\begin{equation}
+    T_n(\cos \theta) := \cos{n\theta}
+\end{equation}
+They fulfil the following recurrence relation
+\begin{align}
+    T_0(x) &= 1, \;\;\;\; T_1(x) = x\\
+    T_{n+1}(x) &= 2xT_n(x) - T_{n-1}(x)\;\;\;\;\text{for}\;\;\;x\in[-1,1]
+\end{align}
+Given this Chebyshev polynomial, the goal of Chebyshev collocation is now to compute the function and its derivatives at certain points, in this case, at the so-called Gauss-Lobatto-Nodes.
+\begin{equation}
+    x_i = \cos\left(\frac{i \pi}{N}\right)\;\;\;\; i=0,1,...,N
+\end{equation}
+Where $N$ is the Chebyshev truncation order. (\cite{IgelPseudospectral} and \cite{Ogilvie_2004})
+Chebyshev polynomials at Gauss-Lobatto Nodes allow for the construction of an approximating function
+\begin{equation}
+    g_n^*(x) \approx \sum_{j=1}^n c_k^*\,
+T_k(x)\;\;\;\;\text{with}\end{equation}
+\begin{equation}
+    c_k^* \approx \frac{2}{N}\sum_{j=1}^N f_j \cos\left(\frac{kj\pi}{N}\right)
+\end{equation}
+(\cite{IgelPseudospectral})
+The important thing to note is that $g_n^*(x_i) = f(x_i)$, where $x_i$ are the Gauss-Lobatto-Nodes. So $g_n^*$ perfectly approximates the function $f$ at said points.
+
+Thereafter one constructs a differentiation matrix that transforms function values into derivative approximations.
+\begin{equation}
+D_{ij} =
+\begin{cases}
+\frac{-2N^2 + 1}{6}, & \text{for } i = j = N, \\[8pt]
+\frac{-x_i}{2(1-x_i^2)}, & \text{for } i = j = 1,2,\dots,N-1, \\[8pt]
+\frac{c_i}{c_j} \frac{(-1)^{i + j}}{x_i - x_j}, & \text{for } i \neq j = 0,1,\dots,N.
+\end{cases}
+\end{equation}
+
+Given that \cite{Ogilvie_2004} and \cite{refId0} employ a more sophisticated approach, we shall first consider a simple example to illustrate the use of Chebyshev collocation for numerically solving a second-order differential equation.
+
+Given the following problem with Dirichlet boundary conditions.
+\begin{equation}
+    -\frac{d^2u}{dx^2} = f(x) \;\;\; \text{for}\;\;\; f(x) = \sin{\pi x}
+\end{equation}
+The solution by direct calculation gives $\frac{\sin({\pi x})}{\pi^2}$.
+Now using the method of Chebyshev collocation for $N=32$ nodes we get the following plot
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/ChebyshevCollocation.png}
+    \caption{Chebyshev collocation, code can be found at \cite{valentino26_2025_14824434}}
+    \label{fig:Chebyshev collocation}
+\end{figure}
+
+A similar but notably more complex procedure as described in (\cite{valentino26_2025_14824434}) is used in \cite{refId0}. As I am only a BSc student I cannot recreate the described model in the limited amount of time I have. Not to mention Ogilvie and Lin have been publishing papers refining their models since the early 2000s. 
+\subsection{Method used in \cite{refId0}}
+In contrast to \cite{Ogilvie_2004} and \cite{LinOgilvie2017}, \cite{refId0} uses a method which is able to solve the linearized equations without the low-frequency approximation. Although not explicitly mentioned before the low-frequency approximation (\cite{Ogilvie2013}) is eliminated by introducing $h'= P'/\rho_0$ which reduces equations (\ref{pert euler}-\ref{pert grav}) to 
+\begin{dmath}
+    -i\omega\rho_0\mathbf{u'} = -2\rho_0 \mathbf{\Omega \times u'} - \nabla(\rho_0 h') + \mathbf{g}\Delta\Phi'/(4\pi G) -\rho_0\nabla \Phi' - \nabla \Psi + \nabla\cdot(2\mu\mathbf{S})
+\end{dmath}
+\begin{equation}
+    -i\omega h' = -c_s^2(N^2 u_r'/g + \nabla\cdot(\rho_0\mathbf{u'})/\rho_0)
+\end{equation}
+\begin{equation}
+    -i\omega\Delta\Phi' = -4\pi G\nabla\cdot(\rho_0\mathbf{u'})
+\end{equation}
+where $u_r'$ is the radial velocity perturbation, $c_s^2 = \Gamma P_0/\rho_0$ is the square of the adiabatic sound speed, $N^2$ is the Brunt-Väisälä frequency and 
+\begin{equation}
+    g = \frac{d\Phi_0}{dr} = -\frac{1}{\rho_0}\frac{dP_0}{dr}
+\end{equation}
+\cite{refId0}
+Imposing additional boundary conditions leads to a further reduction.
+Given $\psi_l^m = \mathcal{A}(r/R)^lY_l^m(\theta,\phi)e^{-i\omega t}$, the perturbations $\mathbf{u'},h'$ and $\Phi'$ can be expanded using vector spherical harmonics in the following way
+\begin{equation}
+    \mathbf{u'} = \sum_{n=m}^L \left[u_n^m(r)\mathbf{R}_m^n + v_n^m(r)\mathbf{S}_n^m + w_n^m(r)\mathbf{T}_n^m\right] 
+\end{equation}
+\begin{equation}
+    h' = \sum_{n=m}^L h_n^m(r) Y_n^m(\theta,\phi)
+\end{equation}
+\begin{equation}
+    \Phi' = \sum_{n=m}^L \Phi_n^m(r)Y_n^m(\theta,\phi)
+\end{equation}
+\cite{refId0}
+with $\mathbf{R}_n^m,\mathbf{S}_n^m,\mathbf{T}_n^m$ being the vector spherical harmonics defined through
+\begin{equation}
+    \mathbf{R}_n^m = Y_n^m(\theta,\phi)\mathbf{\hat{r}},\;\;\mathbf{S}_n^m = r\nabla Y_n^m(\theta,\phi),\;\;\mathbf{T}_n^m = r\nabla \times \mathbf{R}_n^m
+\end{equation}
+\cite{refId0}
+Recall that 
+\begin{equation}
+    Y_l^m(\theta,\phi) = \sqrt{(2l + 1)\frac{(l-m)!}{(l+m)!}}P_l^m(\cos\theta)e^{im\phi}
+\end{equation}
+(\cite{Steinacker_Elektrodynamik})
+Where $P_l^m$ are the associated Legendre polynomials.
+
+Following a similar procedure as for (\ref{proj ur}-\ref{proj W}) and truncating the system at a certain degree $L$, allowed Yufeng Lin to get a set of ODEs for $u_n^m(r),v_n^m(r),w_n^m(r),h_n^m(r)$ and $\Phi_n^m(r)$. Using Chebyshev collocation on $N_r$ Gauss for the radial dependence and additional boundary conditions, such as the vanishing Lagrangian pressure perturbations at the surface, leads to solutions of the linear system, which involves a large block-tridiagonal matrix at truncations of $L=200$ and $N_r=100$ (\cite{refId0}). From this Yufeng Lin was able to obtain the complex tidal Love number through the following relation
+\begin{equation}
+    K_l^m =\Phi_l^m(r=R)
+\end{equation}
+For the real part of the Love numbers, the fractional correction for dynamical tides is defined by
+\begin{equation}
+    \Delta k_{lm} = \frac{k_{lm}- k_{lm}^{(hs)}}{k_{lm}^{(hs)}}
+\end{equation}
+where $k_{lm}^{(hs)}$ is the hydrostatic case, obtained by setting $\omega =0$. 
+
+As for the dissipation rate, it follows a similar description as for \ref{visc diss}.
+\begin{equation}
+    D_v = \int_V2\mu\mathbf{S}^2dV
+\end{equation}
+Where $V$ represents the Fluid-domain. A further important relationship is $D_v \propto \text{Im}[K_l^m]$ given by 
+\begin{equation}
+    D_v = \frac{(2l + 1) R\mathcal{A}^2}{8\pi G}\text{Im}[K_l^m]
+\end{equation}
+
+\section{Results}
+The results based on the previously described model exhibit retrograde tidal forcing in the corotating frame with the planet based on our convention. The frequency range is thereby going to be negative $-2 \leq \omega/\Omega \leq -1$. For the real part of the tidal Love number, \cite{refId0} shows the dynamical fractional correction $\Delta k_{lm}$. To make comparisons with the obtained fractional corrections for Jupiter, Yufeng Lin adjusts $\Delta k_{42}$ by multiplying it by $0.07$ to account for the centrifugal effect. Since the tidal frequency is negative, the imaginary part of the Love numbers is also negative and is related to the tidal quality factor through
+$k_{lm}/Q_l=-\text{Im}[K_l^m]$.
+\subsection{Full polytope model}
+The full polytope model, representing an isentropic, naturally buoyant Jupiter, serves as a reference case for analyzing the effects of dynamical tides in the absence of internal stratification, so to speak the variation of density, composition, or temperature within Jupiter's interior that creates stable layers where convective mixing (according to mixing theory) is suppressed. This occurs when a fluid element experiences stable stratification, such as in the radiative regions of Jupiter.
+The model assumes a polytropic equation of state with index $n=1$, ensuring that the interior structure is fully convective with no stable stratification.(\ref{fig:Polytrope Fractional Correction},\cite{refId0})
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{images/PolytopeIndex1.jpg}
+    \caption{The top panel shows $\Delta k_{lm}$ of the real part of the Love numbers. The bottom panel shows the minus imaginary part $-\text{Im}[K_l^m] = k_{lm}/Q_l$. The vertical dashed lines indicate tidal frequencies of four Galilean moons (from left to right Callisto, Ganymed, Europa and Io). The horizontal dashed line in the bottom panel represents the astrometric observation of the frequency independent $k_2/Q_2$ from (\cite{Lainey2009})}
+    \label{fig:Polytrope Fractional Correction}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{images/PolytropeIndex1MeridionalPlane.png}
+    \caption{Density perturbations (left half) and radial velocity perturbations (right half) in the meridional plane to the tidal component $\Psi_4^2$ at two resonant frequencies in Fig. \ref{fig:Polytrope Fractional Correction}. Amplitudes were normalized by the maximum absolute values.}
+    \label{fig:Polytrope Ind 1 Merid Plane}
+\end{figure}
+The results indicate that $\Delta k_{22}$ is consistently negative over the considered frequency range with values smoothly varying except at a distinct peak around $\omega/\Omega=-1.08$, This peak corresponds to resonance with an inertial mode, which significantly enhances the tidal response. According to \cite{Ogilvie_2004} Tidal Dissipation is most efficient at resonant frequencies which explains the peaks in \ref{fig:Polytrope Fractional Correction} and the corresponding resonances indicated in (a) of \ref{fig:Polytrope Ind 1 Merid Plane}
+Such inertial modes, restored by the Coriolis force, exist in the frequency range $0 < |\omega/\Omega| < 2$ (Greenspan, 1968) and can strongly couple with the tidal forcing, producing abrupt variations in $\Delta k_{lm}$. The computed $\Delta k_{22}$ aligns with the derived models, yielding a discrepancy of approximately $-4\%$ at the tidal frequency of Io, consistent with prior studies (\cite{Lai_2021}, \cite{Idini_2021}).
+While the real part of the Love number exhibits modes variations, the imaginary part, which determines the tidal dissipation, shows clear peaks at specific frequencies. These peaks are associated with resonant modes, leading to enhanced energy dissipation, as illustrated in the bottom panel of \ref{fig:Polytrope Fractional Correction}. However the dissipation due to resonance modes is not sufficient to explain the overall quality factor inferred from astrometric data (\cite{Lainey2009}). This suggests that additional dissipative mechanisms, such as stable stratification or a solid core, may be necessary to explain Jupiter's measured tidal response. \cite{refId0}
+
+Furthermore, the density perturbations and velocity field for the dominant inertial mode resonance at $\omega/\Omega = -1.08$ (a) of \ref{fig:Polytrope Ind 1 Merid Plane} reveal large-scale oscillations in the interior, demonstrating that internal gravity waves or g-modes contribute arise from the tidal interaction between Jupiter and its moons.
+
+\subsection{Compact Rigid core model}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/AllMs.jpg}
+    \caption{The three representative models of Jupiter’s interior considered in this study are illustrated. The top panel presents schematic depictions of the models, while the bottom panel displays the density profile (normalized by the central density) and the Brunt-Väisälä frequency (normalized by the dynamical frequency) as functions of radius. The blue shading in the bottom panel highlights solid regions. The models include: (a) a compact rigid core model, (b) an extended dilute core model, and (c) a model featuring both a compact rigid core and an outer stable layer.}
+    \label{fig:Density Models}
+\end{figure}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{images/CompRigCoreFracDist.png}
+    \caption{As for Fig. \ref{fig:Polytrope Fractional Correction}, but for the interior model with a compact rigid core. The fractional correction $\Delta k_{42}$ (orange curve in the top panel) was
+multiplied by 0.07.}
+    \label{fig:CompRigCoreFracDist}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/CompRigCoreMer.png}
+    \caption{Meridional plane representation of density perturbations (left side) and gravitational perturbations (right side) corresponding to the tidal component $\Psi_2^4$ for the interior model with a compact rigid core. The cases shown include: (a) $\omega/\Omega = -1.5092$ (resonant state) and (b) $\omega/\Omega = 1.53$ (non-resonant state), with an Ekman number of $\text{Ek} = 10^{-7}$. The amplitudes are normalized by their respective maximum absolute values.}
+    \label{fig:CompRigCoreMer}
+\end{figure}
+Considering the tidal response for the interior model with a compact, rigid core as visualized in (a) of \ref{fig:Density Models}. The density distribution shows a solid core in the inner region $(r \leq 0.25R)$. $N^2/\omega_{\text{dyn}}^2 = 0$ indicates little to no gravitational perturbation which implies no g-modes. It can be observed that the real parts represented through $\Delta k_{lm}$ are largely similar to those of a full polytope, but the imaginary parts have much more peaks due to the introduction of a rigid solid core at the centre of Jupiter. This allows enhanced dissipation in the form of inertial waves in the fluid envelope. It can be noted that resonance occurs at frequencies near to the one of Io once more, according to Figure \ref{fig:CompRigCoreFracDist} and (a) of \ref{fig:CompRigCoreMer}. It can be observed that localized wave beams spawn from critical latitudes in Fig. \ref{fig:CompRigCoreMer} which propagate along the characteristics of the inertial wave equations (\cite{Ogilvie2009}).
+However recent studies (\cite{Lin_2021}) revealed large-scale structures beneath the localized wave beams resemble inertial modes in a full sphere. This is in alignment with the results found by \cite{refId0}. The curves of $\Delta k_{lm}$ resemble does of a full polytrope as $\Delta k_{22}$ and $\Delta k_{42}$ are only relevant for large-scale density perturbations. Nevertheless, the model produces results for $\Delta k_{22}$ which correspond to real-world findings of the Juno spacecraft, but still it has major discrepancies for $\Delta k_{42}$.
+It can be observed that the imaginary parts are modified by the presence of the rigid cores as already mentioned, we see many more resonant frequencies corresponding to peaks in the imaginary part of the plot. This tidal dissipation corresponds to significantly enhanced localized wave beams spawned from critical regions. The velocity perturbations in (b) of Fig. \ref{fig:CompRigCoreMer} exhibits localized wave propagation, which can generate viscous dissipation but does not produce enough density and thus gravitational perturbations. \cite{refId0}
+
+\subsection{Dilute core model}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/DiluteCoreFrac.png}
+    \caption{As for Fig. \ref{fig:CompRigCoreFracDist}, but for the interior model with an extended dilute core. Green lines represent results without including the Coriolis force. The fractional correction $\Delta k_{42}$ (orange and green curves in the top panel) was multiplied by 0.07.}
+    \label{fig:DiluteCoreModFrac}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/DiluteCoreMerid.png}
+    \caption{Meridional plane representation of density perturbations (left side) and radial velocity perturbations (right side) corresponding to the tidal component $\Psi_2^4$ for the interior model featuring an extended dilute core. (a) Excluding the Coriolis force at $\omega/\Omega = -1.5193$ (resonant state); (b) Incorporating the Coriolis force at $\omega/\Omega = -1.4448$ (resonant state). Amplitudes are normalized by their respective maximum absolute values.
+}
+    \label{fig:DiluteCoreMerid}
+\end{figure}
+According to recent calculations of Jupiter's gravitational field based on data from the Juno mission, the planet's interior might have an extended dilute core instead of a compact rigid core (\cite{Wahl_2017}; \cite{Militzer_2022}). The tidal reaction of such a structure, as shown in Figure \ref{fig:Density Models}(b), is considered. It is assumed that the diluted core is stably stratified, which implies the propagation of buoyancy-driven internal gravity waves. The dynamical tides appear as gravito-inertial waves when the Coriolis force is completely integrated (\cite{DINTRANS_RIEUTORD_VALDETTARO_1999}; \cite{PhysRevD.96.083005}). However, the Coriolis effect, which is essential for altering the tidal response, was not fully taken into consideration in earlier research (\cite{Idini_2022b}).
+
+Figure \ref{fig:DiluteCoreModFrac} presents the frequency dependence of the Love numbers for this model. The tidal component  (blue curves) exhibits a dynamical correction $\Delta k_{22}$ comparable to that of a fully convective polytrope, but with fewer prominent resonance spikes. The imaginary component of $k_{22}$ reveals multiple peaks, indicative of resonant coupling with high-degree mixed modes. These resonances contribute to enhanced tidal dissipation while having a limited impact on the quadrupolar gravitational potential perturbations $(l=2)$. The overall dissipation rate surpasses that of the full polytrope model due to the interaction of gravito-inertial waves within the dilute core and inertial waves in the convective envelope.
+
+For the tidal component $\Psi_2^4$, Figure \ref{fig:DiluteCoreModFrac} compares results with (orange) and without (green) the Coriolis force. When the Coriolis effect is neglected, the fractional correction $\Delta k_{42}$ remains positive, likely due to the influence of pure gravity modes enhancing the in-phase gravitational perturbations. However, the real and imaginary components of $k_{42}$ exhibit pronounced resonances at specific frequencies in the absence of the Coriolis force. A key example occurs at $\omega/\Omega = -1.5193$, which is close to Io’s tidal frequency. This resonance corresponds to the first gravity mode of $l=4,m=2$, proposed by \cite{Idini_2022b} as a potential explanation for Jupiter’s observed $\Delta k_{42}$. Their study, however, did not fully incorporate Coriolis effects, which, as we show, significantly alter the tidal response.
+
+Accounting for the Coriolis force induces strong fluctuations in $\Delta k_{42}$, particularly in the frequency range $-1.5 <\omega/\Omega < -1$. This variability results from the coupling of gravity and inertial modes in the dilute core, creating additional resonance opportunities. The most pronounced correction occurs near $\omega/\Omega = -1.2$, close to the frequency of a purely inertial mode ((a) of Figure \ref{fig:Polytrope Ind 1 Merid Plane}). However, while this resonance can generate corrections exceeding $10\%$, it remains too far from Io’s tidal frequency to account for the observed $\Delta k_{42} \approx -11\%$. A closer resonance occurs at $\omega/\Omega = -1.4448$, coinciding with the fundamental gravity mode when Coriolis effects are included. Figure \ref{fig:DiluteCoreMerid} (b) illustrates the spatial structure of this resonant response, showing how rotation alters both the mode frequency and structure. Perturbations within the dilute core adopt the form of gravito-inertial waves, transitioning into pure inertial waves in the outer convective envelope.
+
+Despite these modifications, the dynamical correction $\Delta k_{42}$ remains insufficient to reproduce the full observed correction. To capture the narrow resonance at $\omega/\Omega = -1.4448$, Yufeng Lin utilized 200 frequency sampling points in the interval $[-1.45,-1.43]$. The peak amplitude of $\Delta k_{42}$ remained consistent with calculations using 20 sampling points, confirming adequate resolution for the resonant peak.
+
+A comparison between the orange and green curves in Figure 6 reveals that tidal dissipation is enhanced by approximately two orders of magnitude when the Coriolis force is included. This suggests that pure gravity waves alone are a relatively inefficient mechanism for tidal dissipation, unless strong resonances occur. However, nonlinear processes such as wave breaking (\cite{10.1111/j.1365-2966.2011.18468.x}, \cite{Weinberg_2012}) may further enhance dissipation beyond the predictions of our linear analysis.
+
+\subsection{Outer stable layer model}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/OuterStableLayerFrac.png}
+    \caption{As for Fig. \ref{fig:Polytrope Fractional Correction}, but for the interior model with a small rigid core and a top stably stratified layer. Green lines represent results at the Ekman-number $\text{Ek} = 10^{−7}$. The fractional correction $\Delta k_{42}$ (orange and green curves in the top panel) was multiplied by $0.07$.}
+    \label{fig:OuterStableLayerFrac}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/OuterStableLayerMer.png}
+    \caption{Perturbations in the meridional plane affecting the tidal component $\psi_4^2$ at $\omega/\Omega = -1.1650$ for the interior model (c) seen in Fig. \ref{fig:Density Models} (a) Density (left half) and radial velocity (right half) disturbances; (b) gravitational (left half) and vorticity (right half) perturbations. Amplitudes were standardized by the maximum absolute values. The dashed lines indicate $r = 0.8R$.}
+    \label{fig:OuterStableLayerMer}
+\end{figure}
+This study examines the influence of an outer stable layer that may be present in Jupiter due to H-He immiscibility (\cite{Debras_2019}). Figure \ref{fig:OuterStableLayerFrac} illustrates the relationship between Love numbers and their corresponding variables.
+
+The tidal frequency for the interior model (c) in Fig. \ref{fig:Density Models} incorporates a compact rigid core and a stable layer situated between $0.8R$ and $0.9R$. The tidal responses to $\psi_2^2$ indicate that the dynamical correction $\Delta k_{22}$ resembles the scenario without the stable layer. However, the existence of the thin stable layer removes the spike associated with the resonant inertial mode at the tidal frequency near $\omega/\Omega = -1.08$.
+The total tidal dissipation resulting from $\psi_2^2$ is similar to that observed in the absence of the top stable layer (blue curve in the lower panel of Fig. \ref{fig:CompRigCoreFracDist}); however, the fluctuation amplitudes (the variations between peaks and troughs) are reduced.
+
+Results for the tidal responses to $\psi_4^2$ are presented for $\text{Ek} = 10^{−7}$ (green curves) to demonstrate the influence of fluid viscosity in Fig. \ref{fig:OuterStableLayerFrac}. The viscosity has minimal impact on the real part of the Love number. Tidal dissipation exhibits a weak dependence on viscosity at peaks and troughs; however, the overall dissipation remains largely insensitive to viscosity. \cite{Ogilvie2013} demonstrates that frequency-averaged dissipation is independent of viscosity.
+The dynamical correction $\Delta k_{42}$ resembles the scenario without the stable layer. Significant variations in $\Delta k_{42}$ are observed at the tidal frequency near $\omega/\Omega = -1.1650$, indicating a resonant mode as illustrated in Fig. \ref{fig:OuterStableLayerMer}. This mode is complex due to the involvement of three distinct layers in the interior model under consideration. The fluid body exhibits neutral buoyancy and facilitates the propagation of inertial waves. Nevertheless, the fluid domain is divided by a thin stable layer that inhibits radial fluid motions and establishes a "barrier" for communication between inertial waves in the inner and outer regions (refer to the radial velocity and vorticity perturbations in Fig. \ref{fig:OuterStableLayerMer}). The thin stable layer also facilitates the support of rotationally modified gravity waves. The density perturbations are primarily confined to the stable layer and the outer envelope $(r > 0.8R)$. The gravitational perturbations are primarily influenced by the $l = 4$ component, despite the complex velocity and density perturbations, which exhibit a relatively straightforward radial dependence.
+This complex mode pertains to the $l = 4$ inertial mode in the absence of a stable layer, resulting in significant dynamical corrections near the tidal frequency at $\omega/\Omega \approx −1.1$, as illustrated in Fig. \ref{fig:CompRigCoreFracDist}. However, the dynamical correction $\Delta k_{42}$ is insignificant following the centrifugal correction at the tidal frequency of Io. \cite{refId0}
+
+\section{Conclusion}
+In conclusion they've created a numerical method to calculate tidal responses in a compressible, self-gravitating, spinning, and viscous fluid body. The Coriolis force was considered but centrifugal distortion was ignored, allowing them to solve the problem in spherical geometry. 
+
+A pseudo-spectral approach using spherical harmonics in the angular directions and Chebyshev collocation in the radial direction was used. In contrast to previous studies on Jupiter's dynamical tides (\cite{Lai_2021}, \cite{Idini_2022b}; \cite{Dewberry_2022}), they've solved the tidally forced problem and included fluid viscosity, obtaining both real and imaginary Love numbers for a given planetary interior model.
+This study examined three simplified interior models (Fig. \ref{fig:Density Models}) of Jupiter using a polytrope index of 1. In the frequency range of $-2 \leq \omega/\Omega \leq -1$, the main focus was on the tidal components $\psi_2^2$ and $\psi_4^2$. These components are important to the tidal frequencies of Galilean moons. The numerical results indicate that the dynamical correction $\Delta k_{22}$ is typically insensitive to interior models. All models which were examined can produce the observed $\Delta k_{22} \approx -4\%$ at Io tidal frequency, consistent with prior research (\cite{Idini_2021}, \cite{Lai_2021}).
+Adding a compact stiff core or extended dilute core to the entire polytrope increases tidal dissipation, resulting in comparable tidal quality factor Q (\cite{Lainey2009}).
+All models investigated for tidal reactions to the Ψ2 4 component struggle to produce $k_{42} \approx -11\%$ near the tidal frequency of Io. In the inner model with a compact rigid core, large dynamical corrections occur at $\omega/\Omega \approx -1.1$ due to resonance with an inertial mode dominated by spherical harmonics of l = 4 and m = 2. However, this resonance is too distant from the tidal frequencies of Galilean moons. It can be shown that the Coriolis force can considerably modify gravity modes in the interior model with an extended dilute core, resulting in mixed gravito-inertial modes. Dynamic adjustments from gravito-inertial modes in the dilute core are not enough to explain the observed $k_{42} \approx -11\%$ near Io's tidal frequency in the simplified model. The impact of a top stable layer on Jupiter's tides was briefly examined. The thin stable layer works as a "barrier" to limit density and velocity fluctuations in the outer envelope. Our numerical results indicate that the top stable layer has minimal impact on the true tidal Love values.
+There has been no attempt to create an accurate inner model of Jupiter in this work. These simple models aimed to analyze tidal responses in various Jupiter's interior situations. The dynamical tides of Jupiter are extremely reliant on tidal frequency, therefore satellite-dependent Love numbers can put more limits on its interior (\cite{Idini_2022b}). Seismology is the most reliable method for determining planet inner structures, however detecting Jupiter's oscillations remains challenging (\cite{Gaulme_2011}). However, the numerical scheme proposed in this study can be applied to theoretical computations of big planet oscillation modes.
+Future considerations should include caveats. Centrifugal deformation was neglected when solving the problem in spherical geometry. The centrifugal effect significantly impacts Jupiter's tidal Love values, particularly for high-degree components. Centrifugal corrections were made for qualitative comparisons, but it is important to consider both Coriolis and centrifugal effects for quantitative comparisons with high precision observations in the future. Second, massive planets' differential rotations impact oscillation modes and tidal responses.
+Jupiter's high magnetic field and electrically conducting fluid (metallic hydrogen) contribute to its tides (\cite{Ogilvie2018}).
+
+In summary the paper by Yufeng Lin and other similar papers help in the understanding uf fundamental interactions of tidal waves through dissipative processes from a planet with its orbiting companions.
+
+\section{Appendix}
+\subsection{Recreation of one of the plots}
+Assume a very simple tidal wave model for which $\psi_l^m = Y_l^m(\theta,\phi)$. Given this we can simply plot the spherical harmonic in a polar coordinate plot, which resembles the meridional plane plots in all of the cited papers.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{images/SpherHarmSolutionY22.png}
+    \caption{Approximation of $\psi_2^2$ using spherical harmonics \cite{valentino26_2025_14832349}}
+    \label{fig:sphere harm}
+\end{figure}
+
+\bibliographystyle{aa}
+\bibliography{references}
+
+
+\end{document}
